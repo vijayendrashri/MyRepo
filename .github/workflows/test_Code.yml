@@ -7,7 +7,7 @@ on:
       - 'deprecate/*/*.yaml'
 
 jobs:
-    test_Code:
+  test_Code:
     runs-on: ubuntu-latest
 
     steps:
