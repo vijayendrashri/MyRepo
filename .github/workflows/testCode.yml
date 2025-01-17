@@ -1,0 +1,16 @@
+name: Test EGMP
+
+on: 
+  pull_request:
+    types: [closed]
+    paths:
+      - 'deprecate/*/*.yaml'
+
+jobs:
+  egmp_pr_validation_flow‎:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      
+  
