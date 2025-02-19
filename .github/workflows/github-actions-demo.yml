@@ -17,4 +17,4 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: echo "RepoName:" ${{ github.event.repository.name }} ${{github.workspace}}
+      - run: echo "RepoName:" ${{ github.repo.name }} 
