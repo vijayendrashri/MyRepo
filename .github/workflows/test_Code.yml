@@ -13,6 +13,6 @@ jobs:
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." ${{ github.event.pull_request.number }}
       - run: echo "skip_workflow=true" >> $GITHUB_ENV
-      - run: echo "Path = ${{pwd}}"
+      - run: echo "Path = "pwd
       - run: cd ../deprecate/dev
       - run: ls
