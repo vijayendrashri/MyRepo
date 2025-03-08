@@ -15,4 +15,4 @@ jobs:
       - run: echo "skip_workflow=true" >> $GITHUB_ENV
       - run: echo "Path = "pwd
       - run: cd deprecate/dev
-      - run: ls
+      - run: false
