@@ -19,3 +19,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: echo "RepoName:" ${{ github.event.repo.name }} 
       - run: exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo "GITHUB_TOKEN="${{secrets.GITHUB_TOKEN}} 
