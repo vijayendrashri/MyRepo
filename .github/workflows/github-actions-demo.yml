@@ -18,6 +18,6 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: echo "RepoName:" ${{ github.event.repo.name }} 
-      - run: echo "My Secret Token is:${{ secrets.REPO_ACCESS_TOKEN }}"
+      - run: echo "My Secret Token is:${{ secrets.MY_TOKEN }}"
 
           
