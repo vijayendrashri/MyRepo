@@ -2,7 +2,7 @@ name: Test EGMP
 
 on: 
   pull_request:
-    types: [closed]
+    types: [open]
     paths:
       - 'deprecate/*/*.yaml'
 
