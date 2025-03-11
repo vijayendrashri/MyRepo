@@ -2,7 +2,7 @@ name: Test EGMP
 
 on: 
   pull_request:
-    types: [closed]
+    types: [open]
     paths:
       - 'deprecate/*/*.yaml'
 
@@ -15,3 +15,8 @@ jobs:
       - run: echo "skip_workflow=true" >> $GITHUB_ENV
       - run: echo "Path = "pwd
       - run: cd deprecate/dev
+      - name: Create a Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
