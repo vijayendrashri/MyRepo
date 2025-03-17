@@ -6,3 +6,8 @@ jobs:
   steps:
      - name: my-step
        run: echo "Hellow-World"
+ my-second:
+  runs-on: ubuntu-latest
+  steps:
+     - name: my-step
+       run: echo "Hellow-World 2"
