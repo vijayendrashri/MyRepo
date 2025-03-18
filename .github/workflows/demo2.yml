@@ -5,14 +5,14 @@ on: [push]
 #     types: [close]
 #     paths:
 #       - 'deprecate/*/*.yaml'
-env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   config_on_boarding_flow:
     runs-on: ubuntu-latest
 
  # The sequential steps/tasks in the workflow
     steps:
+    - env:
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
     - name: Code Checkout
       uses: actions/checkout@v4
       with:
