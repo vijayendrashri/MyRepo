@@ -3,8 +3,8 @@ name: Test Demo2
 on: 
   pull_request:
     types: [close]
-#     paths:
-#       - 'deprecate/*/*.yaml'
+    paths:
+      - 'deprecate/*/*.yaml'
 env:
   EXIT_WORKFLOW: false
   GH_TOKEN: ${{ github.token }}
