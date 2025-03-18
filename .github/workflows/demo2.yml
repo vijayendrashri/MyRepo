@@ -1,5 +1,5 @@
 name: Test Demo2
-# on: [close]
+# on: [push]
 on: 
   pull_request:
     types: [close]
