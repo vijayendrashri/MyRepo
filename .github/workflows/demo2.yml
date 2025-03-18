@@ -7,7 +7,7 @@ on: [push]
 #       - 'deprecate/*/*.yaml'
 env:
   EXIT_WORKFLOW: false
-  
+  GH_TOKEN: ${{ github.token }}
 jobs:
   config_on_boarding_flow:
     runs-on: ubuntu-latest
