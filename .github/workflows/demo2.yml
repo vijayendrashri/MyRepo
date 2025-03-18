@@ -5,18 +5,20 @@ on: [push]
 #     types: [close]
 #     paths:
 #       - 'deprecate/*/*.yaml'
-
+env:
+  EXIT_WORKFLOW: false
+  
 jobs:
   config_on_boarding_flow:
     runs-on: ubuntu-latest
+
  # The sequential steps/tasks in the workflow
     steps:
     - name: Code Checkout
       uses: actions/checkout@v4
       with:
         ref: main
-          echo "EXIT_WORKFLOW=true" >> $GITHUB_ENV
-        
+          
     - name: Check number of input files
       id: number_of_files
       if: ${{ env.EXIT_WORKFLOW != 'true' }}
@@ -58,6 +60,7 @@ jobs:
 
     - name: Display read-yaml output
       run: echo "${{ steps.yaml-data.outputs.data }}"
+           DELETE_FLAG = ${{ steps.yaml-data.outputs.data }}
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Remove file
