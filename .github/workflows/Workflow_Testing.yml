@@ -1,10 +1,10 @@
 name: Workflow Action Testing
 
-on: 
-  pull_request:
-    types: [close]
-    paths:
-      - 'deprecate/*/*.yaml'
+on: workflow_dispatch
+  # pull_request:
+  #   types: [close]
+  #   paths:
+  #     - 'deprecate/*/*.yaml'
 
 jobs:
   test_Code:
