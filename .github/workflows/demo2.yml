@@ -1,8 +1,8 @@
 name: Test Demo2
-on: [push]
-# on: 
-#   pull_request:
-#     types: [close]
+# on: [close]
+on: 
+  pull_request:
+    types: [close]
 #     paths:
 #       - 'deprecate/*/*.yaml'
 env:
