@@ -11,12 +11,12 @@ jobs:
 
  # The sequential steps/tasks in the workflow
     steps:
-    - env:
-          GH_TOKEN: ${{ secrets.MY_TOKEN }}
     - name: Code Checkout
       uses: actions/checkout@v4
       with:
         ref: main
+    - env:
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
           
     - name: Run read-yaml action
       id: yaml-data
