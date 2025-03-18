@@ -23,7 +23,7 @@ jobs:
       run: |
         FILES_JSON=$(gh pr view ${{ github.event.pull_request.number }} --json files)
         FILE_NAMES=$(echo "$FILES_JSON" | jq -r '.files[].path')
-        echo "Changed files: ${{FILES_JSON}}"     
+        echo "Changed files: ${{FILE_NAMES}}"     
     
     - name: Run read-yaml action
       id: yaml-data
