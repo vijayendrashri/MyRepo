@@ -2,7 +2,7 @@ name: Test Demo2
 on: [push]
 # on: 
 #   pull_request:
-#     types: [close]
+#     types: [opened, synchronize, reopened]
 #     paths:
 #       - 'deprecate/*/*.yaml'
 jobs:
@@ -18,7 +18,15 @@ jobs:
     - name: Get changed files
       id: get_changed_files
       run: |
-        URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+        # Ensure you are accessing the correct pull request number
+        PR_NUMBER=${{ github.event.pull_request.number }}
+        
+        if [ -z "$PR_NUMBER" ]; then
+          echo "Error: PR number not found."
+          exit 1
+        fi
+        
+        URL="https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files"
         FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
         echo "Changed files: $FILES"
         echo "::set-output name=changed_files::$FILES"
