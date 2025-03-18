@@ -3,7 +3,7 @@ name: Test Demo2
 # Workflow trigger rule
 on:
   pull_request:
-    types: [closed]
+    types: [open, closed]
     paths:
         - 'deprecate/*/*.yaml'
   # Allows you to run this workflow manually from the Actions tab
@@ -18,6 +18,20 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: main
-    - name: Check if PR is merged
-      id: check_pr_merged
-      run: echo "PR_MERGED=${{ github.event.pull_request.merged }}" >> $GITHUB_OUTPUT
+    - name: Get File name
+      id: get_file_name
+      run: |
+        FILES_JSON=$(gh pr view ${{ github.event.pull_request.number }} --json files)
+        FILE_NAMES=$(echo "$FILES_JSON" | jq -r '.files[].path')
+        echo "Changed files: ${{FILES_JSON}}"     
+    
+    - name: Run read-yaml action
+      id: yaml-data
+      uses: jbutcher5/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
+      with:
+        file: $FILE_NAME          # File to read from
+        key-path: '["status", "code1"]' # Access the runs key then the using key and retuns the value.
+
+    - name: Display read-yaml output
+      run: echo "${{ steps.yaml-data.outputs.data }}"
+        
