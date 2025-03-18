@@ -5,7 +5,8 @@ on: [push]
 #     types: [close]
 #     paths:
 #       - 'deprecate/*/*.yaml'
-
+env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   config_on_boarding_flow:
     runs-on: ubuntu-latest
