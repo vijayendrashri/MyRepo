@@ -5,9 +5,7 @@ on: [push]
 #     types: [close]
 #     paths:
 #       - 'deprecate/*/*.yaml'
-env:
-  EXIT_WORKFLOW: false
-  GH_TOKEN: ${{ github.token }}
+
 jobs:
   config_on_boarding_flow:
     runs-on: ubuntu-latest
@@ -19,50 +17,20 @@ jobs:
       with:
         ref: main
           
-    - name: Check number of input files
-      id: number_of_files
-      if: ${{ env.EXIT_WORKFLOW != 'true' }}
-      run: |
-          git fetch
-          FILES_JSON=$(gh pr view ${{ github.event.pull_request.number }} --json files)
-          FILE_NAMES=$(echo "$FILES_JSON" | jq -r '.files[].path'| tr '\n' ' ')
-          noOfFiles=$(echo "$FILE_NAMES" | grep -vE '^\.'| wc -w | sed -e 's/^[[:space:]]*//')
-          echo "Detected input files are: $FILE_NAMES"
-          echo "fileNames=$FILE_NAMES" >> "$GITHUB_OUTPUT"           
-          echo noOfFiles=$noOfFiles
-          echo "noOfFiles=$noOfFiles" >> "$GITHUB_OUTPUT"
-    - name: Get input file
-      id: get_file
-      if: ${{ steps.number_of_files.outputs.noOfFiles==1 && env.EXIT_WORKFLOW != 'true' }}
-      run: |
-          #fileName=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
-          fileName=${{ steps.number_of_files.outputs.fileNames }}
-          echo fileName=$fileName
-          if echo "${fileName}" | grep -q '\.yaml$'; then
-            echo "file_found=true" >> "$GITHUB_OUTPUT"
-            echo "fileName=$fileName" >> "$GITHUB_OUTPUT"
-          else
-            echo "file_found=false" >> "$GITHUB_OUTPUT"
-          fi
-
-    - name: Check file status
-      id: check_status
-      if: ${{ env.EXIT_WORKFLOW != 'true' }}
-      run: |
-        FILE_PATH=${{ steps.get_file.outputs.fileName }}
-          
     - name: Run read-yaml action
       id: yaml-data
       uses: jbutcher5/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
       with:
-        file: $FILE_PATH          # File to read from
+        file: deprecate/dev/NewFile1.yaml          # File to read from
         key-path: '["status"]' # Access the runs key then the using key and retuns the value.
 
     - name: Display read-yaml output
       run: echo "${{ steps.yaml-data.outputs.data }}"
            DELETE_FLAG = ${{ steps.yaml-data.outputs.data }}
+    
     - name: Checkout code
       uses: actions/checkout@v3
+    
     - name: Remove file
       run: |
         git rm --cached $FILE_PATH
