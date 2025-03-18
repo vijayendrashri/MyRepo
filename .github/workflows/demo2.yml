@@ -1,11 +1,13 @@
 name: Test Demo2
 
 # Workflow trigger rule
-on: push
-  paths:
-    - 'deprecate/*/*.yaml'
+on:
+   pull_request:
+    types: [open, closed]
+    paths:
+      -'deprecate/*/*.yaml'
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+   workflow_dispatch:
 
 jobs:
   config_on_boarding_flow:
@@ -32,4 +34,3 @@ jobs:
 
     - name: Display read-yaml output
       run: echo "${{ steps.yaml-data.outputs.data }}"
-        
