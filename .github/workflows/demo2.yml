@@ -33,7 +33,7 @@ jobs:
     
     - name: Remove file
       run: |
-        git rm --cached $FILE_PATH
-        git commit -m "Remove "$FILE_PATH
+        git rm --cached deprecate/dev/NewFile1.yaml
+        git commit -m "Remove deprecate/dev/NewFile1.yaml"
         git push origin main
    
