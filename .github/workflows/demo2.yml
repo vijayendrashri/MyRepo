@@ -1,10 +1,10 @@
 name: Test Demo2
-# on: [push]
-on: 
-  pull_request:
-    types: [close]
-    paths:
-      - 'deprecate/*/*.yaml'
+on: [push]
+# on: 
+#   pull_request:
+#     types: [close]
+#     paths:
+#       - 'deprecate/*/*.yaml'
 env:
   EXIT_WORKFLOW: false
   GH_TOKEN: ${{ github.token }}
