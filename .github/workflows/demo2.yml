@@ -32,22 +32,24 @@ jobs:
         echo "::set-output name=changed_files::$FILES"
         echo "fileNames=$FILES" >> "$GITHUB_OUTPUT"    
           
-    - name: Run read-yaml action
-      id: yaml-data
+    - name: Run read yaml action
+      id: yamlStatus
       uses: jbutcher5/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
       with:
         file: ${{ steps.get_changed_files.outputs.fileNames }}          # File to read from
         key-path: '["status"]' # Access the runs key then the using key and retuns the value.
 
     - name: Display read-yaml output
-      run: echo "${{ steps.yaml-data.outputs.data }}"
-           DELETE_FLAG = ${{ steps.yaml-data.outputs.data }}
+      run: echo "${{ steps.yamlStatus.outputs.data }}"
+           DELETE_FLAG = ${{ steps.yamlStatus.outputs.data }}
+           
     - name: Set global email
       run: |
         git config --global user.email "vijayendra05@gmail.com"
         git config --global user.name "vijayendrashri"
         
     - name: Remove file
+      if: steps.yamlStatus.outputs.data=='DEPRECATED' || steps.yamlStatus.outputs.data=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
         git commit -m "Remove ${{ steps.get_changed_files.outputs.fileNames }}"
