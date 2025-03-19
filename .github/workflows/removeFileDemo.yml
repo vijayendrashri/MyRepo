@@ -34,13 +34,12 @@ jobs:
           
     - name: Run read yaml action
       id: yamlStatus
-    - uses: actions/checkout@v2
-    - uses: actions-tools/yaml-outputs@v2 # You may wish to replace main with a version tag such as '1.6' etc.
+      uses: pietrobolcato/action-read-yaml@1.0.0        
       with:
         file: ${{ github.workspace }}/${{ steps.get_changed_files.outputs.fileNames }}          # File to read from
         # key-path: '["status"]' # Access the runs key then the using key and retuns the value.
-        run: echo "${{ steps.yamlStatus.outputs.status }}"
-           DELETE_FLAG = ${{ steps.yamlStatus.outputs.status }}
+        run: |
+           echo status: "${{ steps.yamlStatus.outputs['status'] }}"
            
     - name: Set global email
       run: |
@@ -48,7 +47,7 @@ jobs:
         git config --global user.name "vijayendrashri"
         
     - name: Remove file
-      if: steps.yamlStatus.outputs.status=='DEPRECATED' || steps.yamlStatus.outputs.status=='ARCHIVED'
+      if: steps.yamlStatus.outputs['status']=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
         git commit -m "Remove ${{ steps.get_changed_files.outputs.fileNames }}"
