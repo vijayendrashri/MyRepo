@@ -36,12 +36,9 @@ jobs:
       id: yamlStatus
       uses: actions-tools/yaml-outputs@v2 # You may wish to replace main with a version tag such as '1.6' etc.
       with:
-        file: ${{ steps.get_changed_files.outputs.fileNames }}          # File to read from
-        key-path: '["status"]' # Access the runs key then the using key and retuns the value.
-
-    - name: Display read-yaml output
-      run: echo "${{ steps.yamlStatus.outputs.data }}"
-           DELETE_FLAG = ${{ steps.yamlStatus.outputs.data }}
+        file: ${{ steps.get_changed_files.outputs.fileNames }}      
+        run: echo "${{ steps.yamlStatus.outputs.status }}"
+           DELETE_FLAG = ${{ steps.yamlStatus.outputs.status }}
            
     - name: Set global email
       run: |
@@ -49,7 +46,7 @@ jobs:
         git config --global user.name "vijayendrashri"
         
     - name: Remove file
-      if: steps.yamlStatus.outputs.data=='DEPRECATED' || steps.yamlStatus.outputs.data=='ARCHIVED'
+      if: steps.yamlStatus.outputs.status=='DEPRECATED' || steps.yamlStatus.outputs.status=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
         git commit -m "Remove ${{ steps.get_changed_files.outputs.fileNames }}"
