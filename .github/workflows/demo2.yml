@@ -48,9 +48,6 @@ jobs:
       run: echo "${{ steps.yaml-data.outputs.data }}"
            DELETE_FLAG = ${{ steps.yaml-data.outputs.data }}
     
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
     - name: Remove file
       run: |
         git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
