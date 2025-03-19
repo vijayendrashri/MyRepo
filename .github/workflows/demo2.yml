@@ -49,11 +49,13 @@ jobs:
     - name: Display read-yaml output
       run: echo "${{ steps.yaml-data.outputs.data }}"
            DELETE_FLAG = ${{ steps.yaml-data.outputs.data }}
-    
-    - name: Remove file
+    - name: Set global email
       run: |
         git config --global user.email "vijayendra05@gmail.com"
-        git config --global user.name "Vijayendra"
+        git config --global user.name "vijayendrashri"
+        
+    - name: Remove file
+      run: |
         git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
         git commit -m "Remove ${{ steps.get_changed_files.outputs.fileNames }}"
         git push origin main
