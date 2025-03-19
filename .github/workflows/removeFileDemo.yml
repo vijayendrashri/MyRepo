@@ -61,6 +61,7 @@ jobs:
         else
           echo "File not found"
         fi
+        echo "status is ${{steps.yamlStatus.outputs.status}}"
       
     - name: "Remove Config for Deprecated or Archived file"
       if: steps.yamlStatus.outputs.status=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
