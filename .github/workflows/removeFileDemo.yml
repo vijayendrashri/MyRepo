@@ -21,7 +21,7 @@ jobs:
         git config --global user.name "vijayendrashri"
     
     - name: Get changed files
-      id: get_changed_files
+      id: get_file
       run: |
         # Ensure you are accessing the correct pull request number
         PR_NUMBER=${{ github.event.pull_request.number }}
@@ -37,18 +37,18 @@ jobs:
         echo "::set-output name=changed_files::$FILES"
         echo "fileNames=$FILES" >> "$GITHUB_OUTPUT"    
           
-    - name: Run read yaml action
+    - name: "Read YAML config"
       id: yamlStatus
       uses: pietrobolcato/action-read-yaml@1.0.0        
       with:
-        config: ${{ github.workspace }}/${{ steps.get_changed_files.outputs.fileNames }}
+        config: ${{ github.workspace }}/${{ steps.get_file.outputs.fileName }}
         run: |
            echo status: "${{ steps.yamlStatus.outputs['status'] }}"
-        
-    - name: Remove file
+      
+    - name: "Remove Config for Deprecated or Archived file"
       if: steps.yamlStatus.outputs['status']=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
       run: |
-        git rm --cached ${{ steps.get_changed_files.outputs.fileNames }}
-        git commit -m "Remove ${{ steps.get_changed_files.outputs.fileNames }}"
+        git rm --cached ${{ steps.get_file.outputs.fileName }}
+        git commit -m "Remove ${{ steps.get_file.outputs.fileName }}"
         git push origin main
    
