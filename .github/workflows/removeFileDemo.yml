@@ -46,7 +46,7 @@ jobs:
     #        echo status: "${{ steps.yamlStatus.outputs['status'] }}"
      
     - name: Read and parse key-value from file
-      id: yamlStatus
+      id: parse_status
       run: |
         # Check if the file exists
         if [ -f "${{steps.get_file.outputs.fileName}}" ]; then
@@ -55,17 +55,21 @@ jobs:
             echo "Key: $key, Value: $value"
             # You can access individual values as needed, e.g. for status:
             if [ "$key" == "status" ]; then
-              status=$value
+              echo "status=$value" >> $GITHUB_OUTPUT
             fi
           done < ${{steps.get_file.outputs.fileName}}
         else
           echo "File not found"
         fi
         echo "status=$value" >> "$GITHUB_OUTPUT"
-        echo "status is ${{steps.yamlStatus.outputs.status}}"
-      
+        echo "status is ${{steps.parse_status.outputs.status}}"
+
+    - name: Use the status output
+      run: |
+        echo "The status is ${{ steps.parse_status.outputs.status }}"
+    
     - name: "Remove Config for Deprecated or Archived file"
-      if: steps.yamlStatus.outputs.status=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
+      if: steps.parse_status.outputs.status=='DEPRECATED' || steps.parse_status.outputs['status']=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_file.outputs.fileName }}
         git commit -m "Remove ${{ steps.get_file.outputs.fileName }}"
