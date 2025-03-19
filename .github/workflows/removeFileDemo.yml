@@ -55,12 +55,13 @@ jobs:
             echo "Key: $key, Value: $value"
             # You can access individual values as needed, e.g. for status:
             if [ "$key" == "status" ]; then
-              echo "status=$value" >> "$GITHUB_OUTPUT"
+              status=$value
             fi
           done < ${{steps.get_file.outputs.fileName}}
         else
           echo "File not found"
         fi
+        echo "status=$value" >> "$GITHUB_OUTPUT"
         echo "status is ${{steps.yamlStatus.outputs.status}}"
       
     - name: "Remove Config for Deprecated or Archived file"
