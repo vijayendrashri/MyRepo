@@ -57,7 +57,7 @@ jobs:
             if [ "$key" == "status" ]; then
               echo "status=$value" >> "$GITHUB_OUTPUT"
             fi
-          done < steps.get_file.outputs.fileName
+          done < ${{steps.get_file.outputs.fileName}}
         else
           echo "File not found"
         fi
