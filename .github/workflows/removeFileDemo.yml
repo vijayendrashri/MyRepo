@@ -35,18 +35,35 @@ jobs:
         FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
         echo "Changed files: $FILES"
         echo "::set-output name=changed_files::$FILES"
-        echo "fileNames=$FILES" >> "$GITHUB_OUTPUT"    
+        echo "fileName=$FILES" >> "$GITHUB_OUTPUT"    
           
-    - name: "Read YAML config"
+    # - name: "Read YAML config"
+    #   id: yamlStatus
+    #   uses: pietrobolcato/action-read-yaml@1.0.0        
+    #   with:
+    #     config: ${{ github.workspace }}/${{ steps.get_file.outputs.fileName }}
+    #     run: |
+    #        echo status: "${{ steps.yamlStatus.outputs['status'] }}"
+     
+    - name: Read and parse key-value from file
       id: yamlStatus
-      uses: pietrobolcato/action-read-yaml@1.0.0        
-      with:
-        config: ${{ github.workspace }}/${{ steps.get_file.outputs.fileName }}
-        run: |
-           echo status: "${{ steps.yamlStatus.outputs['status'] }}"
+      run: |
+        # Check if the file exists
+        if [ -f steps.get_file.outputs.fileName ]; then
+          # Read the content of the file and parse the key-value
+          while IFS=":" read -r key value; do
+            echo "Key: $key, Value: $value"
+            # You can access individual values as needed, e.g. for status:
+            if [ "$key" == "status" ]; then
+              echo "status=$value" >> "$GITHUB_OUTPUT"
+            fi
+          done < steps.get_file.outputs.fileName
+        else
+          echo "File not found"
+        fi
       
     - name: "Remove Config for Deprecated or Archived file"
-      if: steps.yamlStatus.outputs['status']=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
+      if: steps.yamlStatus.outputs.status=='DEPRECATED' || steps.yamlStatus.outputs['status']=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_file.outputs.fileName }}
         git commit -m "Remove ${{ steps.get_file.outputs.fileName }}"
