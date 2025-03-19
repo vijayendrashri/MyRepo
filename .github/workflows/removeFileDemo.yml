@@ -34,7 +34,8 @@ jobs:
           
     - name: Run read yaml action
       id: yamlStatus
-      uses: actions-tools/yaml-outputs@v2 # You may wish to replace main with a version tag such as '1.6' etc.
+    - uses: actions/checkout@v2
+    - uses: actions-tools/yaml-outputs@v2 # You may wish to replace main with a version tag such as '1.6' etc.
       with:
         file: ${{ steps.get_changed_files.outputs.fileNames }}          # File to read from
         # key-path: '["status"]' # Access the runs key then the using key and retuns the value.
