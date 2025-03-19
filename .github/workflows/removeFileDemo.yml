@@ -68,7 +68,7 @@ jobs:
         echo "The status is ${{ steps.parse_status.outputs.status }}"
     
     - name: "Remove Config for Deprecated or Archived file"
-      if: steps.parse_status.outputs.status=='DEPRECATED' || steps.parse_status.outputs['status']=='ARCHIVED'
+      if: ${{ steps.parse_status.outputs.status }}=='DEPRECATED' || ${{ steps.parse_status.outputs.status }}=='ARCHIVED'
       run: |
         git rm --cached ${{ steps.get_file.outputs.fileName }}
         git commit -m "Remove ${{ steps.get_file.outputs.fileName }}"
