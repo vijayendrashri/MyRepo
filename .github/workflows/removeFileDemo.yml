@@ -1,4 +1,4 @@
-name: Test Demo2
+name: Remove File Demo
 # on: [push]
 on:
   pull_request:
