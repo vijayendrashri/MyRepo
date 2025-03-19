@@ -10,14 +10,7 @@ jobs:
 
  # The sequential steps/tasks in the workflow
     steps:
-    - name: Authenticate GitHub CLI
-      id: auth_github_cli
-      run: |
-          gh auth login --with-token <<< ${{ SECRETS.GITHUB_TOKEN }}
-          gh auth status
-      env:
-          GH_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}
-          
+        
     - name: Code Checkout
       uses: actions/checkout@v4
       with:
