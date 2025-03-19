@@ -36,8 +36,7 @@ jobs:
       id: yamlStatus
       uses: pietrobolcato/action-read-yaml@1.0.0        
       with:
-        file: ${{ github.workspace }}/${{ steps.get_changed_files.outputs.fileNames }}          # File to read from
-        # key-path: '["status"]' # Access the runs key then the using key and retuns the value.
+        config: ${{ github.workspace }}/${{ steps.get_changed_files.outputs.fileNames }}
         run: |
            echo status: "${{ steps.yamlStatus.outputs['status'] }}"
            
