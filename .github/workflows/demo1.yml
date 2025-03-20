@@ -18,19 +18,15 @@ jobs:
         echo Name : "${{ github.actor }}"
         echo Email : "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
 
- 
- get-email:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@v4
+ get-user-email:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Get email from GitHub API
+      run: |
+        email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               "https://api.github.com/users/${{ github.actor }}" | jq -r '.email')
+        echo "User email: $email"
+        echo "USER_EMAIL=$email" >> $GITHUB_ENV
 
-     - name: Get commit author's email
-       run: |
-         email=$(git log -1 --pretty=format:'%ae')
-         echo "Commit author's email: $email"
-         echo "AUTHOR_EMAIL=$email" >> $GITHUB_ENV
-
-     - name: Use email in next step
-       run: echo "Email from env:" $AUTHOR_EMAIL
-
+    - name: Use email in next step
+      run: echo "Email from env:" $USER_EMAIL
