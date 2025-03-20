@@ -5,7 +5,10 @@ jobs:
   runs-on: ubuntu-latest
   steps:
      - name: my-step
-       run: echo "Hellow-World"
+       run: |
+        echo "Hellow-World"
+        echo "GitHub Default Email: github-actions[bot]@users.noreply.github.com"
+
  my-second:
   runs-on: ubuntu-latest
   steps:
