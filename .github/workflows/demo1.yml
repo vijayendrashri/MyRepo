@@ -18,11 +18,3 @@ jobs:
         echo Name : "${{ github.actor }}"
         echo Email : "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
      
-     - name: Get commit author's email
-        run:|
-           email=$(git log -1 --pretty=format:'%ae')
-           echo "Commit author's email:" $email
-           echo "AUTHOR_EMAIL=$email" >> $GITHUB_ENV
-
-     - name: Use email in next step
-       run: echo "Email from env:" ${{ AUTHOR_EMAIL }}
