@@ -10,4 +10,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
      - name: my-step
-       run: echo "Hellow-World 2"
+       run: |
+        echo "Hellow-World 2"
+        echo Name : "${{ github.actor }}"
+        echo Email : "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
