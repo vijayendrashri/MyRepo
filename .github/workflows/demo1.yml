@@ -17,4 +17,20 @@ jobs:
         echo "Hellow-World 2"
         echo Name : "${{ github.actor }}"
         echo Email : "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-     
+
+ job:
+   get-email:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout repository
+         uses: actions/checkout@v4
+ 
+       - name: Get commit author's email
+         run: |
+           email=$(git log -1 --pretty=format:'%ae')
+           echo "Commit author's email: $email"
+           echo "AUTHOR_EMAIL=$email" >> $GITHUB_ENV
+ 
+       - name: Use email in next step
+         run: echo "Email from env: $AUTHOR_EMAIL"
+ 
