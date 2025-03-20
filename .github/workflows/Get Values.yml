@@ -1,4 +1,4 @@
-name: hello-world
+name: Get Values
 on: workflow_dispatch
 jobs:
  my-first:
