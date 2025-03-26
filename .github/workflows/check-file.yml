@@ -1,0 +1,34 @@
+name: Check File Existence
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  check-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if file exists
+        id: check_file
+        run: |
+          FILE_PATH="deprecate/dev/NewFile1.yaml"
+          REPO="your-username/your-repository"
+          BRANCH="main"
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH")
+          
+          if [ "$RESPONSE" == "200" ]; then
+            echo "File exists."
+            echo "::set-output name=file_exists::true"
+          else
+            echo "File does not exist."
+            echo "::set-output name=file_exists::false"
+          fi
+
+      - name: Use result
+        run: |
+          if [ "${{ steps.check_file.outputs.file_exists }}" == "true" ]; then
+            echo "✅ File exists!"
+          else
+            echo "❌ File does not exist."
+            exit 1
+          fi
