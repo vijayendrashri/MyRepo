@@ -11,7 +11,7 @@ jobs:
         id: check_file
         run: |
           FILE_PATH="deprecate/dev/NewFile1.yaml"
-          REPO="your-username/your-repository"
+          REPO="vijayendrashri/MyRepo"
           BRANCH="main"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH")
