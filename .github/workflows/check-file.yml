@@ -35,12 +35,14 @@ jobs:
       - name: Print workspace path
         run: echo "Repository is located at $GITHUB_WORKSPACE"
 
-      - name: Check if file contains STATUS
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for string in file
         run: |
-          FILE_PATH= "$GITHUB_WORKSPACE/deprecate/dev/NewFile1.yaml" # Change this to your target file
-          if grep -q "STATUS" "$FILE_PATH"; then
-            echo "STATUS found in $FILE_PATH"
+          if grep -q "status" deprecate/dev/NewFile1.yaml; then
+            echo "String found!"
           else
-            echo "STATUS not found in $FILE_PATH"
-            exit 1  # Fail the workflow if STATUS is not found
+            echo "String not found!"
+            exit 1  # Fails the workflow if string is missing
           fi
