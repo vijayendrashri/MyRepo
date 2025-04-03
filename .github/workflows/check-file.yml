@@ -37,7 +37,7 @@ jobs:
 
       - name: Check if file contains STATUS
         run: |
-          FILE_PATH=$GITHUB_WORKSPACE"/deprecate/dev/NewFile1.yaml" # Change this to your target file
+          FILE_PATH= "$GITHUB_WORKSPACE/deprecate/dev/NewFile1.yaml" # Change this to your target file
           if grep -q "STATUS" "$FILE_PATH"; then
             echo "STATUS found in $FILE_PATH"
           else
