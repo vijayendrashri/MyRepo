@@ -38,11 +38,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check for string in file
+      - name: Check for status in file
         run: |
-          if grep -q "status" deprecate/dev/NewFile1.yaml; then
-            echo "String found!"
+          if grep -Eq "status: (ARCHIVED|DEPRECATED)" path/to/file.txt; then
+            echo "✅ Valid status found!"
+            echo "STATUS_FOUND=true" >> $GITHUB_ENV
           else
-            echo "String not found!"
-            exit 1  # Fails the workflow if string is missing
+            echo "❌ Neither ACTION nor DEPRECATED status found!"
+            exit 1  # Fails the workflow
           fi
+
+      - name: Output status
+        run: echo "STATUS_FOUND is $STATUS_FOUND"
