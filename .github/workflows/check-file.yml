@@ -31,3 +31,12 @@ jobs:
             echo "❌ File does not exist."
             exit 1
           fi
+      - name: Check if file contains STATUS
+        run: |
+          FILE_PATH="deprecate/dev/NewFile1.yaml" # Change this to your target file
+          if grep -q "STATUS" "$FILE_PATH"; then
+            echo "STATUS found in $FILE_PATH"
+          else
+            echo "STATUS not found in $FILE_PATH"
+            exit 1  # Fail the workflow if STATUS is not found
+          fi
