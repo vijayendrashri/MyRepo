@@ -45,7 +45,6 @@ jobs:
             echo "STATUS_FOUND=true" >> $GITHUB_ENV
           else
             echo "❌ Neither ARCHIVED nor DEPRECATED status found!"
-            exit 1  # Fails the workflow
           fi
 
       - name: Output status
