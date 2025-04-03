@@ -31,6 +31,9 @@ jobs:
             echo "❌ File does not exist."
             exit 1
           fi
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
       - name: Check if file contains STATUS
         run: |
           FILE_PATH="https://api.github.com/repos/${{ github.repository }}/contents/deprecate/dev/NewFile1.yaml" # Change this to your target file
