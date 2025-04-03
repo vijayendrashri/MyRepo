@@ -40,11 +40,11 @@ jobs:
 
       - name: Check for status in file
         run: |
-          if grep -Eq "status: (ARCHIVED|DEPRECATED)" path/to/file.txt; then
+          if grep -Eq "status: (ARCHIVED|DEPRECATED)" deprecate/dev/NewFile1.yaml; then
             echo "✅ Valid status found!"
             echo "STATUS_FOUND=true" >> $GITHUB_ENV
           else
-            echo "❌ Neither ACTION nor DEPRECATED status found!"
+            echo "❌ Neither ARCHIVED nor DEPRECATED status found!"
             exit 1  # Fails the workflow
           fi
 
