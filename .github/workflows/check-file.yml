@@ -10,22 +10,21 @@ jobs:
       - name: Check if file exists
         id: check_file
         run: |
-          FILE_PATH = deprecate/dev/NewFile1.yaml
+          FILE_PATH = "deprecate/dev/NewFile1.yaml"
           BRANCH="main"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/contents/$FILE_PATH?ref=$BRANCH")
           
           if [ "$RESPONSE" == "200" ]; then
-            echo "File exists."
-            echo "file_exists=true" >> "$GITHUB_OUTPUT" 
-          else
-            echo "File does not exist."
-            echo "file_exists=false" >> "$GITHUB_OUTPUT" 
+            if grep -Eq "status: (ARCHIVED|DEPRECATED)" FIRST_FILE; then
+              echo "✅ Valid status found!"
+              echo "STATUS_FOUND=true" >> $GITHUB_ENV
+            fi
           fi
 
       - name: Use result
         run: |
-          if [ "${{ steps.check_file.outputs.file_exists }}" == "true" ]; then
+          if [ "${{ steps.check_file.outputs.STATUS_FOUND }}" == "true" ]; then
             echo "✅ File exists!"
           else
             echo "❌ File does not exist."
