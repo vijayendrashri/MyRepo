@@ -7,6 +7,10 @@ jobs:
   check-file:
     runs-on: ubuntu-latest
     steps:
+    
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Check if file exists
         id: check_file
         run: |
