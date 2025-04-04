@@ -31,25 +31,6 @@ jobs:
             exit 1
           fi
 
-      - name: Print workspace path
-        run: echo "Repository is located at $GITHUB_WORKSPACE"
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check for status in file
-        run: |
-          FIRST_FILE="deprecate/dev/NewFile1.yaml"
-          BRANCH="main"
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/contents/$FIRST_FILE?ref=$BRANCH")
-          echo "STATUS_FOUND=false" >> $GITHUB_ENV
-          if [ "$RESPONSE" == "200" ]; then
-            if grep -Eq "status: (ARCHIVED|DEPRECATED)" FIRST_FILE; then
-              echo "✅ Valid status found!"
-              echo "STATUS_FOUND=true" >> $GITHUB_ENV
-            fi
-          fi
 
       - name: Output status
         run: echo "STATUS_FOUND is $STATUS_FOUND"
