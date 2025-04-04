@@ -13,7 +13,7 @@ jobs:
           FIRST_FILE = "deprecate/dev/NewFile1.yaml"
           BRANCH="main"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/contents/$FILE_PATH?ref=$BRANCH")
+            "https://api.github.com/repos/${{ github.repository }}/contents/$FIRST_FILE?ref=$BRANCH")
           echo "STATUS_FOUND=false" >> $GITHUB_ENV
           if [ "$RESPONSE" == "200" ]; then
             if grep -Eq "status: (ARCHIVED|DEPRECATED)" FIRST_FILE; then
