@@ -14,7 +14,7 @@ jobs:
       - name: Check if file exists
         id: check_file
         run: |
-          FILE_PATH=deprecate/dev/NewFile1.yaml
+          FILE_PATH="deprecate/dev/NewFile1.yaml"
           BRANCH="main"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/contents/$FILE_PATH?ref=$BRANCH")
