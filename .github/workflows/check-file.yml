@@ -23,15 +23,5 @@ jobs:
             fi
           fi
 
-      - name: Use result
-        run: |
-          if [ "${{ steps.check_file.outputs.STATUS_FOUND }}" == "true" ]; then
-            echo "✅ File exists!"
-          else
-            echo "❌ File does not exist."
-            exit 1
-          fi
-
-
       - name: Output status
         run: echo "STATUS_FOUND is $STATUS_FOUND"
