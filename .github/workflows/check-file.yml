@@ -22,7 +22,7 @@ jobs:
           echo "RESPONSE = "$RESPONSE
           
           if [ "$RESPONSE" == "200" ]; then
-            if grep -Eq "status *: *\(ARCHIVED|DEPRECATED\)" $FILE_PATH; then
+            if grep -Eq "status:\\s?\(ARCHIVED|DEPRECATED\)" $FILE_PATH; then
               echo "✅ Valid status found!"
               echo "STATUS_FOUND=true" >> "$GITHUB_ENV"
             fi
