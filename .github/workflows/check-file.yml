@@ -26,6 +26,8 @@ jobs:
               echo "✅ Valid status found!"
               echo "STATUS_FOUND=true" >> "$GITHUB_ENV"
             fi
+            else
+              echo "STATUS_FOUND=true" >> "$GITHUB_ENV"
           fi
 
       - name: Output status
